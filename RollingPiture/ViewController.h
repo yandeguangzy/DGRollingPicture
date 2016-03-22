@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DGRollingView.h"
 
 @interface ViewController : UIViewController
 
