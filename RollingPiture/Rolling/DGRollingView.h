@@ -10,16 +10,17 @@
 #import "DGRollingDelagate.h"
 
 
-@interface DGRollingView : UIView
+@interface DGRollingView : UIView <UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate>
+
+
+@property (nonatomic, assign) id<DGRollingViewDataSource> dataSource;
+@property (nonatomic, assign) id<DGRollingViewDelegate> delegate;
 
 typedef void(^CompleteBlock)(void);
+
 - (void)reloadDataWithCompleteBlock:(CompleteBlock)competeBlock;
 
 
-
-
-
-
-- (instancetype) initWithFrame:(CGRect)frame placeholderImage:(UIImage *)image;
+- (instancetype) initWithFrame:(CGRect)frame placeholderImage:(UIImage *)image andPictuerURL:(NSArray *)URLs;
 
 @end

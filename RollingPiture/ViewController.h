@@ -11,6 +11,6 @@
 
 @interface ViewController : UIViewController
 
-
+@property (nonatomic, copy)NSMutableArray *dataArray;
 @end
 
