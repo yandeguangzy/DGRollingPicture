@@ -16,7 +16,10 @@
 @interface DGRollingView ()
 
 @property (nonatomic, strong) NSArray *URLs;
+@property (nonatomic, strong) NSMutableArray *temporaryArray;
 
+//是否循环滚动
+@property (nonatomic, assign) BOOL isRollingCircle;
 
 //布局完成回调
 @property (strong, nonatomic) CompleteBlock completeBlock;
@@ -35,6 +38,9 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
 
 @implementation DGRollingView{
     UICollectionViewScrollDirection mDirection;
+    
+    //记录循环滚动下当前index
+    NSInteger currentIndex;
 }
 
 - (instancetype) initWithFrame:(CGRect)frame placeholderImage:(UIImage *)image andPictuerURL:(NSArray *)URLs{
@@ -71,16 +77,12 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
     }
     
     if (self.dataSource && [self.dataSource respondsToSelector:@selector(DGRollingAllowCircle)]){
-        if([self.dataSource DGRollingAllowCircle]){
-            [self initializeCircleScrollView];
-            return;
-        }
+        _isRollingCircle = [self.dataSource DGRollingAllowCircle];
+        currentIndex = 0;
     }
     [self initializeScrollView];
 }
-- (void) initializeCircleScrollView{
-    [self addSubview:self.mScrollView];
-}
+
 - (void) initializeScrollView {
     [self addSubview:self.mCollectionView];
 }
@@ -110,6 +112,10 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
         _mCollectionView.showsHorizontalScrollIndicator = NO;
         _mCollectionView.showsVerticalScrollIndicator = NO;
         
+        if(_isRollingCircle){
+            [_mCollectionView setContentOffset:CGPointMake(_mCollectionView.bounds.size.width, 0) animated:NO];
+        }
+        
         
     }
     return _mCollectionView;
@@ -122,21 +128,57 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
     return _mScrollView;
 }
 
+- (NSMutableArray *) temporaryArray{
+    if(!_temporaryArray){
+        _temporaryArray = [[NSMutableArray alloc] initWithObjects:_URLs[_URLs.count-1],_URLs[0],_URLs[1>=_URLs.count?0:1], nil];
+    }
+    return _temporaryArray;
+}
+
 #pragma mark - UICollectionViewDataSource
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    if(_isRollingCircle){
+        return 3;
+    }
     return self.URLs.count;
 }
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     DGCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DGImageBrowserCellItemIdentifier forIndexPath:indexPath];
     cell.placehoderImage = _placeholderImage;
-    cell.imageURL = self.URLs[indexPath.row];
+    if (_isRollingCircle){
+        cell.imageURL = self.temporaryArray[indexPath.row];
+    }else{
+        cell.imageURL = self.URLs[indexPath.row];
+    }
+    
     return cell;
 }
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if(!_isRollingCircle){
+        return;
+    }
+    if(scrollView.contentOffset.x == scrollView.bounds.size.width){
+        return;
+    }
+    if(scrollView.contentOffset.x == 0){
+        currentIndex = currentIndex-1<0?_URLs.count-1:currentIndex-1;
+    }else{
+        currentIndex = currentIndex+1>=_URLs.count?0:currentIndex+1;
+    }
+    [self updateTemporArray];
+}
+
+- (void) updateTemporArray{
+    [self.temporaryArray removeAllObjects];
+    [_temporaryArray addObject:_URLs[currentIndex-1<0?_URLs.count-1:currentIndex-1]];
+    [_temporaryArray addObject:_URLs[currentIndex]];
+    [_temporaryArray addObject:_URLs[currentIndex+1>=_URLs.count?0:currentIndex+1]];
+    [_mCollectionView reloadData];
     
+    [_mCollectionView setContentOffset:CGPointMake(_mCollectionView.bounds.size.width, 0) animated:NO];
 }
 
 - (void)reloadDataWithCompleteBlock:(CompleteBlock)competeBlock{
