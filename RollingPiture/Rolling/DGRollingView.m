@@ -20,6 +20,8 @@
 
 //是否循环滚动
 @property (nonatomic, assign) BOOL isRollingCircle;
+//小圆点
+@property (nonatomic, strong) UIPageControl *pageControl;
 
 //布局完成回调
 @property (strong, nonatomic) CompleteBlock completeBlock;
@@ -85,6 +87,7 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
 
 - (void) initializeScrollView {
     [self addSubview:self.mCollectionView];
+    [self addSubview:self.pageControl];
 }
 
 
@@ -124,6 +127,7 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
 - (DGBaseScrollView *) mScrollView{
     if(!_mScrollView){
         _mScrollView = [[DGBaseScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height) andURLs:_URLs andPlaceholderImage:_placeholderImage andScrollDirection:mDirection];
+        
     }
     return _mScrollView;
 }
@@ -134,6 +138,23 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
     }
     return _temporaryArray;
 }
+
+- (UIPageControl *) pageControl{
+    if(!_pageControl){
+        CGRect pageControlFrame = CGRectZero;
+        if(self.dataSource && [self.dataSource respondsToSelector:@selector(DGAddPageControlFrame)]){
+            pageControlFrame = [self.dataSource DGAddPageControlFrame];
+        }
+        _pageControl = [[UIPageControl alloc] initWithFrame:pageControlFrame];
+        _pageControl.numberOfPages = _URLs.count;
+        _pageControl.currentPage = 0;
+        _pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:39/255.0 green:120/255.0 blue:211/255.0 alpha:1];
+        _pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+        
+    }
+    return _pageControl;
+}
+
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -169,6 +190,19 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
         currentIndex = currentIndex+1>=_URLs.count?0:currentIndex+1;
     }
     [self updateTemporArray];
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView{
+    float pagecount = scrollView.contentOffset.x/scrollView.frame.size.width-0.5;
+    NSLog(@"%f",pagecount);
+    if(pagecount <= 0){
+        _pageControl.currentPage = currentIndex - 1 < 0?_URLs.count - 1:currentIndex-1;
+    }else if (0 < pagecount && pagecount <= 1){
+        _pageControl.currentPage = currentIndex;
+    }else{
+        _pageControl.currentPage = currentIndex + 1 >= _URLs.count?0:currentIndex + 1;
+    }
+    
 }
 
 - (void) updateTemporArray{

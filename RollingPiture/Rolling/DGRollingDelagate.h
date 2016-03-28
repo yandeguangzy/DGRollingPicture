@@ -22,7 +22,9 @@
 /*** 返回滚动方向 默认横向*/
 - (UICollectionViewScrollDirection) DGRollingViewDirection;
 /*** 是否循环 默认为No */
-- (BOOL)DGRollingAllowCircle;
+- (BOOL) DGRollingAllowCircle;
+/*** 是否支持小圆点 默认为不支持 */
+- (CGRect) DGAddPageControlFrame;
 
 @end
 

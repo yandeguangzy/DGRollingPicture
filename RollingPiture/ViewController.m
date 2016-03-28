@@ -72,6 +72,13 @@
 - (BOOL) DGRollingAllowCircle{
     return YES;
 }
+- (CGRect) DGAddPageControlFrame{
+    return CGRectMake(0, 160, self.view.bounds.size.width, 30);
+}
+
+- (UICollectionViewScrollDirection) DGRollingViewDirection{
+    return UICollectionViewScrollDirectionHorizontal;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
