@@ -11,7 +11,6 @@
 #import "DGImageBrowserLayout.h"
 #import "DGCollectionViewCell.h"
 #import "Masonry.h"
-#import "DGBaseScrollView.h"
 
 @interface DGRollingView ()
 
@@ -31,7 +30,6 @@
 
 //滚动控件
 @property (nonatomic, strong) UICollectionView *mCollectionView;
-@property (nonatomic, strong) DGBaseScrollView *mScrollView;
 
 
 @end
@@ -140,13 +138,6 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
     return _mCollectionView;
 }
 
-- (DGBaseScrollView *) mScrollView{
-    if(!_mScrollView){
-        _mScrollView = [[DGBaseScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height) andURLs:_URLs andPlaceholderImage:_placeholderImage andScrollDirection:mDirection];
-        
-    }
-    return _mScrollView;
-}
 
 - (NSMutableArray *) temporaryArray{
     if(!_temporaryArray){

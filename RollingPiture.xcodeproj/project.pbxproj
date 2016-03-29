@@ -22,7 +22,6 @@
 		EB1FF5E31CA3955A00437DAF /* DGImageBrowserLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FF5E21CA3955A00437DAF /* DGImageBrowserLayout.m */; };
 		EB1FF5E61CA395AD00437DAF /* DGCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FF5E51CA395AD00437DAF /* DGCollectionViewCell.m */; };
 		EB1FF5E91CA3B82800437DAF /* DGZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FF5E81CA3B82800437DAF /* DGZoomScrollView.m */; };
-		EB1FF5EC1CA3DF2400437DAF /* DGBaseScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FF5EB1CA3DF2400437DAF /* DGBaseScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,8 +72,6 @@
 		EB1FF5E51CA395AD00437DAF /* DGCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGCollectionViewCell.m; sourceTree = "<group>"; };
 		EB1FF5E71CA3B82800437DAF /* DGZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGZoomScrollView.h; sourceTree = "<group>"; };
 		EB1FF5E81CA3B82800437DAF /* DGZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGZoomScrollView.m; sourceTree = "<group>"; };
-		EB1FF5EA1CA3DF2400437DAF /* DGBaseScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGBaseScrollView.h; sourceTree = "<group>"; };
-		EB1FF5EB1CA3DF2400437DAF /* DGBaseScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGBaseScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,8 +196,6 @@
 				EB1FF5E51CA395AD00437DAF /* DGCollectionViewCell.m */,
 				EB1FF5E71CA3B82800437DAF /* DGZoomScrollView.h */,
 				EB1FF5E81CA3B82800437DAF /* DGZoomScrollView.m */,
-				EB1FF5EA1CA3DF2400437DAF /* DGBaseScrollView.h */,
-				EB1FF5EB1CA3DF2400437DAF /* DGBaseScrollView.m */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -401,7 +396,6 @@
 				EB1FF5931C9FF4F600437DAF /* AppDelegate.m in Sources */,
 				EB1FF5901C9FF4F600437DAF /* main.m in Sources */,
 				EB1FF5C41CA11A9300437DAF /* DGRollingView.m in Sources */,
-				EB1FF5EC1CA3DF2400437DAF /* DGBaseScrollView.m in Sources */,
 				EB1FF5E31CA3955A00437DAF /* DGImageBrowserLayout.m in Sources */,
 				EB1FF5E61CA395AD00437DAF /* DGCollectionViewCell.m in Sources */,
 			);
@@ -546,7 +540,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = RollingPiture/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fslb.RollingPiture;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -559,7 +553,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = RollingPiture/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.fslb.RollingPiture;
 				PRODUCT_NAME = "$(TARGET_NAME)";
