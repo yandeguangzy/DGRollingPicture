@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
                           "yandeguang" => "754199572@qq.com",
  }
   s.source        = { :git => "https://github.com/yandeguangzy/DGRollingPicture.git", :tag => s.version.to_s }
-  s.source_files  = "RollingPiture/Rolling"
+  s.source_files  = "RollingPiture/Rolling","RollingPiture/Rolling/CustomView"
   s.platform      = :ios, '6.0'
   s.requires_arc  = true
   s.dependency "SDWebImage", "~> 3.7.3"
