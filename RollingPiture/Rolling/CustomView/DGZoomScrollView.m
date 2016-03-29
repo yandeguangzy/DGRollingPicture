@@ -7,7 +7,6 @@
 //
 
 #import "DGZoomScrollView.h"
-#import "Masonry.h"
 #import "UIImageView+WebCache.h"
 
 @implementation DGZoomScrollView
