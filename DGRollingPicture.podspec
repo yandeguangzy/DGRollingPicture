@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DGRollingPicture"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "DGRollingPicture is a flexible and practical advertising rolling figure."
   s.homepage     = "https://github.com/yandeguangzy/DGRollingPicture"
   s.license      = "MIT"
