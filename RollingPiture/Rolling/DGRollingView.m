@@ -10,7 +10,6 @@
 #import "UIImageView+WebCache.h"
 #import "DGImageBrowserLayout.h"
 #import "DGCollectionViewCell.h"
-#import "Masonry.h"
 
 @interface DGRollingView ()
 
