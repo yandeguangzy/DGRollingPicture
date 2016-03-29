@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DGZoomScrollView.h"
 
 @interface DGCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) NSString *imageURL;
 @property (nonatomic, strong) UIImage *placehoderImage;
 
-@property (nonatomic, strong) DGZoomScrollView *zoomScrollView;
 
 @end

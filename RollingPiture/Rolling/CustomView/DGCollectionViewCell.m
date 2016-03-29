@@ -7,6 +7,13 @@
 //
 
 #import "DGCollectionViewCell.h"
+#import "UIImageView+WebCache.h"
+
+@interface DGCollectionViewCell ()
+
+@property (nonatomic, strong) UIImageView *mImageView;
+
+@end
 
 @implementation DGCollectionViewCell
 
@@ -14,24 +21,26 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self.contentView addSubview:self.zoomScrollView];
-        self.zoomScrollView.successBlock = ^(UIImage *image){
-            
-        };
+        [self addSubview:self.mImageView];
     }
     return self;
 }
 
 - (void) setImageURL:(NSString *)imageURL{
     _imageURL = imageURL;
-    self.zoomScrollView.imageURL = _imageURL;
-    self.zoomScrollView.placehoderImage = _placehoderImage;
+    _imageURL = [_imageURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [self.mImageView sd_setImageWithURL:[NSURL URLWithString:_imageURL] placeholderImage:_placehoderImage completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+    }];
+
 }
 
-- (DGZoomScrollView *)zoomScrollView{
-    if(!_zoomScrollView){
-        _zoomScrollView = [[DGZoomScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+- (UIImageView *)mImageView{
+    if(!_mImageView){
+        _mImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+        _mImageView.backgroundColor = [UIColor cyanColor];
     }
-    return _zoomScrollView;
+    return _mImageView;
 }
+
 @end

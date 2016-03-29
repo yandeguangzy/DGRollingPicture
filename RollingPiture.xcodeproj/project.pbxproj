@@ -18,7 +18,6 @@
 		EB1FF5B41C9FF4F700437DAF /* RollingPitureUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1FF5B31C9FF4F700437DAF /* RollingPitureUITests.m */; };
 		EB2F57B51CAA68040076DC38 /* DGCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2F57AC1CAA68040076DC38 /* DGCollectionViewCell.m */; };
 		EB2F57B61CAA68040076DC38 /* DGImageBrowserLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2F57AE1CAA68040076DC38 /* DGImageBrowserLayout.m */; };
-		EB2F57B71CAA68040076DC38 /* DGZoomScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2F57B01CAA68040076DC38 /* DGZoomScrollView.m */; };
 		EB2F57B81CAA68040076DC38 /* DGRollingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2F57B31CAA68040076DC38 /* DGRollingView.m */; };
 		EB2F57BA1CAA6A2B0076DC38 /* 200.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2F57B91CAA6A2B0076DC38 /* 200.png */; };
 /* End PBXBuildFile section */
@@ -64,8 +63,6 @@
 		EB2F57AC1CAA68040076DC38 /* DGCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGCollectionViewCell.m; sourceTree = "<group>"; };
 		EB2F57AD1CAA68040076DC38 /* DGImageBrowserLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGImageBrowserLayout.h; sourceTree = "<group>"; };
 		EB2F57AE1CAA68040076DC38 /* DGImageBrowserLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGImageBrowserLayout.m; sourceTree = "<group>"; };
-		EB2F57AF1CAA68040076DC38 /* DGZoomScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGZoomScrollView.h; sourceTree = "<group>"; };
-		EB2F57B01CAA68040076DC38 /* DGZoomScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGZoomScrollView.m; sourceTree = "<group>"; };
 		EB2F57B11CAA68040076DC38 /* DGRollingDelagate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGRollingDelagate.h; sourceTree = "<group>"; };
 		EB2F57B21CAA68040076DC38 /* DGRollingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGRollingView.h; sourceTree = "<group>"; };
 		EB2F57B31CAA68040076DC38 /* DGRollingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGRollingView.m; sourceTree = "<group>"; };
@@ -191,8 +188,6 @@
 				EB2F57AC1CAA68040076DC38 /* DGCollectionViewCell.m */,
 				EB2F57AD1CAA68040076DC38 /* DGImageBrowserLayout.h */,
 				EB2F57AE1CAA68040076DC38 /* DGImageBrowserLayout.m */,
-				EB2F57AF1CAA68040076DC38 /* DGZoomScrollView.h */,
-				EB2F57B01CAA68040076DC38 /* DGZoomScrollView.m */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -393,7 +388,6 @@
 				EB2F57B81CAA68040076DC38 /* DGRollingView.m in Sources */,
 				EB2F57B51CAA68040076DC38 /* DGCollectionViewCell.m in Sources */,
 				EB2F57B61CAA68040076DC38 /* DGImageBrowserLayout.m in Sources */,
-				EB2F57B71CAA68040076DC38 /* DGZoomScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

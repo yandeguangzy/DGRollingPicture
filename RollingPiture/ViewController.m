@@ -61,6 +61,9 @@
     NSLog(@"%ld",index);
 }
 
+- (void) DGRollingViewDidSelectItemAtIndex:(NSInteger)index{
+    NSLog(@"%ld",index);
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

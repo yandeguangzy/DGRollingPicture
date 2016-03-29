@@ -184,7 +184,7 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
 #pragma mark - UICollectionViewDelegate
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (self.delegate && [self.delegate respondsToSelector:@selector(DGRollingViewDidSelectItemAtIndex:)]){
-        [self.delegate DGRollingViewDidSelectItemAtIndex:indexPath.row];
+        [self.delegate DGRollingViewDidSelectItemAtIndex:currentIndex];
     }
 }
 
