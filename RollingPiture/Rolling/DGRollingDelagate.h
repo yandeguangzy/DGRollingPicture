@@ -16,7 +16,8 @@
 @protocol DGRollingViewDataSource <NSObject>
 
 @required
-
+/*** 返回图片URL、缺省图 */
+- (NSArray *) DGRollingViewURLs;
 
 @optional
 /*** 返回滚动方向 默认横向*/
@@ -33,7 +34,9 @@
 @required
 
 @optional
-
+/*** 点击Item回调 */
+- (void) DGRollingViewDidSelectItemAtIndex:(NSInteger) index;
+- (void) DGRollingViewDidEndDeceleratingAtCurrentPage:(NSInteger) index;
 @end
 
 

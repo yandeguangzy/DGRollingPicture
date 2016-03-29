@@ -25,12 +25,12 @@
     return self;
 }
 
-- (CGSize) collectionViewContentSize{
-    NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
-    
-    CGFloat contentSize_W = self.itemSize.width * itemCount;
-    CGSize contentSize = CGSizeMake(contentSize_W, self.itemSize.height);
-    return contentSize;
-}
+//- (CGSize) collectionViewContentSize{
+//    NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
+//    
+//    CGFloat contentSize_W = self.itemSize.width * itemCount;
+//    CGSize contentSize = CGSizeMake(contentSize_W, self.itemSize.height);
+//    return contentSize;
+//}
 
 @end

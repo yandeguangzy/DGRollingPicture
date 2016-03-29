@@ -21,6 +21,6 @@ typedef void(^CompleteBlock)(void);
 - (void)reloadDataWithCompleteBlock:(CompleteBlock)competeBlock;
 
 
-- (instancetype) initWithFrame:(CGRect)frame placeholderImage:(UIImage *)image andPictuerURL:(NSArray *)URLs;
+- (instancetype) initWithFrame:(CGRect)frame placeholderImage:(UIImage *)image;
 
 @end

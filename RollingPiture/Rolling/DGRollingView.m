@@ -45,12 +45,11 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
     NSInteger currentIndex;
 }
 
-- (instancetype) initWithFrame:(CGRect)frame placeholderImage:(UIImage *)image andPictuerURL:(NSArray *)URLs{
+- (instancetype) initWithFrame:(CGRect)frame placeholderImage:(UIImage *)image{
     self = [super initWithFrame:frame];
     if(self){
         self.backgroundColor = [UIColor whiteColor];
         self.placeholderImage = image;
-        self.URLs = URLs;
     }
     return self;
 }
@@ -69,6 +68,10 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
 }
 
 - (void)initialize{
+    if(self.dataSource && [self.dataSource respondsToSelector:@selector(DGRollingViewURLs)]){
+        self.URLs = [self.dataSource DGRollingViewURLs];
+    }
+    
     if(self.URLs.count == 0){
         [self addSubview:self.placeholderImageView];
         return;
@@ -92,6 +95,13 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
 
 
 #pragma mark - 懒加载
+- (NSArray *)URLs{
+    if(!_URLs){
+        _URLs = [[NSArray alloc] init];
+    }
+    return _URLs;
+}
+
 - (UIImageView *) placeholderImageView{
     if(!_placeholderImageView){
         _placeholderImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
@@ -114,9 +124,15 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
         
         _mCollectionView.showsHorizontalScrollIndicator = NO;
         _mCollectionView.showsVerticalScrollIndicator = NO;
+        _mCollectionView.bounces = NO;
         
         if(_isRollingCircle){
-            [_mCollectionView setContentOffset:CGPointMake(_mCollectionView.bounds.size.width, 0) animated:NO];
+            
+            if(mDirection == UICollectionViewScrollDirectionHorizontal){
+                [_mCollectionView setContentOffset:CGPointMake(_mCollectionView.bounds.size.width, 0) animated:NO];
+            }else{
+                [_mCollectionView setContentOffset:CGPointMake(0, _mCollectionView.bounds.size.height) animated:NO];
+            }
         }
         
         
@@ -150,7 +166,7 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
         _pageControl.currentPage = 0;
         _pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:39/255.0 green:120/255.0 blue:211/255.0 alpha:1];
         _pageControl.pageIndicatorTintColor = [UIColor whiteColor];
-        
+        _pageControl.enabled = NO;
     }
     return _pageControl;
 }
@@ -175,34 +191,64 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
     
     return cell;
 }
+#pragma mark - UICollectionViewDelegate
+- (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(DGRollingViewDidSelectItemAtIndex:)]){
+        [self.delegate DGRollingViewDidSelectItemAtIndex:indexPath.row];
+    }
+}
+
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if(!_isRollingCircle){
         return;
     }
-    if(scrollView.contentOffset.x == scrollView.bounds.size.width){
-        return;
+    if (mDirection == UICollectionViewScrollDirectionHorizontal){
+        if(scrollView.contentOffset.x == scrollView.bounds.size.width){
+            return;
+        }
+        if(scrollView.contentOffset.x == 0){
+            currentIndex = currentIndex-1<0?_URLs.count-1:currentIndex-1;
+        }else{
+            currentIndex = currentIndex+1>=_URLs.count?0:currentIndex+1;
+        }
+    }else if (mDirection == UICollectionViewScrollDirectionVertical){
+        if(scrollView.contentOffset.y == scrollView.bounds.size.height){
+            return;
+        }
+        if(scrollView.contentOffset.y == 0){
+            currentIndex = currentIndex-1<0?_URLs.count-1:currentIndex-1;
+        }else{
+            currentIndex = currentIndex+1>=_URLs.count?0:currentIndex+1;
+        }
     }
-    if(scrollView.contentOffset.x == 0){
-        currentIndex = currentIndex-1<0?_URLs.count-1:currentIndex-1;
-    }else{
-        currentIndex = currentIndex+1>=_URLs.count?0:currentIndex+1;
-    }
+    
+    
     [self updateTemporArray];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(DGRollingViewDidEndDeceleratingAtCurrentPage:)]){
+        [self.delegate DGRollingViewDidEndDeceleratingAtCurrentPage:currentIndex];
+    }
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView{
-    float pagecount = scrollView.contentOffset.x/scrollView.frame.size.width-0.5;
-    NSLog(@"%f",pagecount);
-    if(pagecount <= 0){
-        _pageControl.currentPage = currentIndex - 1 < 0?_URLs.count - 1:currentIndex-1;
-    }else if (0 < pagecount && pagecount <= 1){
-        _pageControl.currentPage = currentIndex;
+    float pagecount;
+    if (mDirection == UICollectionViewScrollDirectionVertical){
+        pagecount = scrollView.contentOffset.y/scrollView.frame.size.height-0.5;
     }else{
-        _pageControl.currentPage = currentIndex + 1 >= _URLs.count?0:currentIndex + 1;
+        pagecount = scrollView.contentOffset.x/scrollView.frame.size.width-0.5;
     }
-    
+    if (_isRollingCircle){
+        if(pagecount <= 0){
+            _pageControl.currentPage = currentIndex - 1 < 0?_URLs.count - 1:currentIndex-1;
+        }else if (0 < pagecount && pagecount <= 1){
+            _pageControl.currentPage = currentIndex;
+        }else{
+            _pageControl.currentPage = currentIndex + 1 >= _URLs.count?0:currentIndex + 1;
+        }
+    }else{
+        _pageControl.currentPage = pagecount + 1;
+    } 
 }
 
 - (void) updateTemporArray{
@@ -212,7 +258,11 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
     [_temporaryArray addObject:_URLs[currentIndex+1>=_URLs.count?0:currentIndex+1]];
     [_mCollectionView reloadData];
     
-    [_mCollectionView setContentOffset:CGPointMake(_mCollectionView.bounds.size.width, 0) animated:NO];
+    if (mDirection == UICollectionViewScrollDirectionHorizontal){
+        [_mCollectionView setContentOffset:CGPointMake(_mCollectionView.bounds.size.width, 0) animated:NO];
+    }else if (mDirection == UICollectionViewScrollDirectionVertical){
+        [_mCollectionView setContentOffset:CGPointMake(0, _mCollectionView.bounds.size.height) animated:NO];
+    }
 }
 
 - (void)reloadDataWithCompleteBlock:(CompleteBlock)competeBlock{

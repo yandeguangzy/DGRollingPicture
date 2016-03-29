@@ -16,7 +16,7 @@
     if (self) {
         [self.contentView addSubview:self.zoomScrollView];
         self.zoomScrollView.successBlock = ^(UIImage *image){
-            NSLog(@"下载成功");
+            
         };
     }
     return self;
