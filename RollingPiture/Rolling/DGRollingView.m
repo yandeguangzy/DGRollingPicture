@@ -150,6 +150,8 @@ static NSString *DGImageBrowserCellItemIdentifier = @"DGImageBrowserCellItemIden
         CGRect pageControlFrame = CGRectZero;
         if(self.dataSource && [self.dataSource respondsToSelector:@selector(DGAddPageControlFrame)]){
             pageControlFrame = [self.dataSource DGAddPageControlFrame];
+        }else{
+            return nil;
         }
         _pageControl = [[UIPageControl alloc] initWithFrame:pageControlFrame];
         _pageControl.numberOfPages = _URLs.count;
